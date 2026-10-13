@@ -1,0 +1,251 @@
+{
+  "id": "software-testing",
+  "title": "Testing de Software",
+  "shortTitle": "TEST / QA",
+  "mark": "T",
+  "slides": [
+    {
+      "type": "workshop", "nav": "Inicio", "institutional": true,
+      "kicker": "Taller práctico · 75–80 minutos",
+      "title": "Testing de Software",
+      "subtitle": "Cómo comprobar que una solución funciona, se integra correctamente y sigue funcionando después de cada cambio.",
+      "flow": [
+        { "title": "Código", "text": "Construir una solución" },
+        { "title": "Pruebas", "text": "Verificar lo esperado" },
+        { "title": "Confianza", "text": "Obtener evidencia repetible" }
+      ],
+      "details": [{ "title": "Recorrido del taller · seis bloques", "text": "Introducción y fundamentos: 10 min. Unitarios y AAA: 20 min. Integración: 15 min. APIs y bases de datos: 15 min. Interfaces, regresión y automatización: 10 min. Ejercicio y cierre: 5–10 min. El ritmo prioriza ejemplos y discusión; máximo 90 minutos." }]
+    },
+    {
+      "type": "workshop", "nav": "¿Funciona?", "kicker": "01 / Introducción y fundamentos · 10 min",
+      "title": "¿Cómo sabemos que funciona?",
+      "subtitle": "«Ejecuté la aplicación, ingresé algunos datos y funcionó.»",
+      "bullets": ["¿Qué ocurre si ingresamos datos incorrectos?", "¿Qué ocurre cuando se conectan otros componentes?", "¿Qué ocurre cuando modificamos el código?"],
+      "cards": [
+        { "title": "Informal", "text": "Explorar algunos casos sin un registro sistemático." },
+        { "title": "Estructurada", "text": "Definir entradas, pasos y resultados esperados.", "accent": "violet" },
+        { "title": "Automatizada", "text": "Repetir verificaciones y comparar resultados.", "accent": "lime" }
+      ],
+      "note": { "label": "Idea central", "text": "Que funcione una vez no significa que funcione correctamente en todas las condiciones esperadas." }
+    },
+    {
+      "type": "workshop", "nav": "Qué es un test", "kicker": "Una verificación controlada",
+      "title": "¿Qué es un test?",
+      "subtitle": "Compara el comportamiento obtenido con un resultado esperado.",
+      "flow": [
+        { "title": "Entrada", "text": "Datos conocidos" },
+        { "title": "Ejecución", "text": "Acción bajo prueba" },
+        { "title": "Obtenido", "text": "Qué sucedió" },
+        { "title": "Comparación", "text": "Contra lo esperado" },
+        { "title": "Resultado", "text": "Aprobado / Fallido" }
+      ],
+      "codes": [{ "language": "text", "title": "Ejemplo verificable", "code": "Entrada:   Precio = 1000, Cantidad = 3\nEsperado:  Total = 3000\nObtenido:  Total = 3000\nResultado: PASS" }],
+      "note": { "label": "El esperado", "text": "Se deriva de los requisitos, no simplemente de lo que actualmente devuelve el programa." }
+    },
+    {
+      "type": "workshop", "nav": "Niveles", "kicker": "Elegir el alcance",
+      "title": "¿Qué parte del sistema estamos probando?",
+      "pyramid": [
+        { "title": "End-to-End / Sistema", "text": "Flujo completo: completar un formulario, guardar y consultar." },
+        { "title": "Integration Testing", "text": "Componentes reales: servicio de alumnos + repositorio + base." },
+        { "title": "Unit Testing", "text": "Una unidad aislada: calcular el total de una compra." }
+      ],
+      "note": { "label": "Pirámide de testing", "text": "Es una guía para distribuir las pruebas, no una regla rígida. Muchas pruebas rápidas y algunos flujos completos seleccionados por riesgo." }
+    },
+    {
+      "type": "workshop", "nav": "Sistema de alumnos", "kicker": "Nuestro ejemplo de trabajo",
+      "title": "Un sistema sencillo de gestión de alumnos",
+      "subtitle": "Seleccionar un nivel para identificar qué componentes participan.",
+      "interactive": "architecture",
+      "architecture": [
+        { "title": "Interfaz de usuario", "text": "Captura y muestra información." },
+        { "title": "API / Controlador", "text": "Recibe solicitudes y devuelve respuestas." },
+        { "title": "AlumnoService", "text": "Aplica las reglas de negocio." },
+        { "title": "AlumnoRepository", "text": "Gestiona la persistencia." },
+        { "title": "Base de datos", "text": "Almacena registros e impone restricciones." }
+      ],
+      "details": [{ "title": "La misma idea en escritorio", "text": "Tkinter / PyQt → AlumnoService → AlumnoRepository → SQLite. Cambia la tecnología o la interfaz, pero los principios de testing se mantienen." }],
+      "note": { "label": "Frontera", "text": "En el unitario del servicio, reemplazamos el repository por un doble. En integración usamos persistencia real de prueba; en E2E también interviene la interfaz." }
+    },
+    {
+      "type": "workshop", "nav": "Primer unitario", "kicker": "02 / Testing unitario y AAA · 20 min",
+      "title": "Probar una función aislada",
+      "codes": [
+        { "language": "python", "title": "Función bajo prueba", "code": "def calcular_total(precio, cantidad):\n    return precio * cantidad" },
+        { "language": "python", "title": "Test con pytest", "code": "def test_calcular_total():\n    resultado = calcular_total(1000, 3)\n\n    assert resultado == 3000" },
+        { "language": "bash", "title": "Ejecutar", "code": "pytest" },
+        { "language": "text", "title": "Salida ilustrativa", "code": "1 passed" }
+      ],
+      "note": { "label": "Cómo funciona", "text": "Invocamos la función con datos conocidos y comparamos con el esperado. El test falla si la condición no se cumple. Ejemplo con pytest: función y test en el mismo archivo o con el import correspondiente." }
+    },
+    {
+      "type": "workshop", "nav": "Patrón AAA", "kicker": "Preparar → Ejecutar → Comprobar",
+      "title": "Cómo organizar un test: AAA",
+      "interactive": "aaa",
+      "code": "def test_calcular_total():\n\n    # ARRANGE: preparar los datos\n    precio = 1000\n    cantidad = 3\n\n    # ACT: ejecutar la funcionalidad\n    resultado = calcular_total(precio, cantidad)\n\n    # ASSERT: verificar el resultado\n    assert resultado == 3000",
+      "stages": [
+        { "label": "Arrange", "text": "PREPARAR: definir datos, objetos, dependencias y condiciones iniciales. ¿Qué necesito preparar antes de probar?", "lines": [3, 4, 5] },
+        { "label": "Act", "text": "EJECUTAR: invocar la funcionalidad bajo prueba. ¿Qué acción quiero verificar?", "lines": [7, 8] },
+        { "label": "Assert", "text": "COMPROBAR: comparar el obtenido con el esperado. ¿Cómo sé que funcionó correctamente?", "lines": [10, 11] }
+      ],
+      "note": { "label": "AAA", "text": "Permite crear tests ordenados, comprensibles y fáciles de mantener." }
+    },
+    {
+      "type": "workshop", "nav": "Test fallido", "kicker": "El mismo test, dos implementaciones",
+      "title": "Un test fallido también es útil",
+      "codes": [{ "language": "python", "title": "Test que no cambia", "code": "def test_calcular_total():\n    resultado = calcular_total(1000, 3)\n\n    assert resultado == 3000" }],
+      "interactive": "failure",
+      "implementations": [
+        { "label": "Incorrecta", "code": "def calcular_total(precio, cantidad):\n    return precio + cantidad", "output": "FAILED test_calcular_total\n\nassert 1003 == 3000\n\n1 failed" },
+        { "label": "Correcta", "code": "def calcular_total(precio, cantidad):\n    return precio * cantidad", "output": "1 passed" }
+      ],
+      "note": { "label": "Detectar → Corregir → Repetir", "text": "El fallo muestra una diferencia y ayuda a localizar el problema. La salida es ilustrativa; no ejecutamos código aquí. Los tests no garantizan la ausencia absoluta de errores." }
+    },
+    {
+      "type": "workshop", "nav": "Happy path y límites", "kicker": "Casos ideales, límites e inválidos",
+      "title": "No alcanza con probar el caso ideal",
+      "table": {
+        "headers": ["Caso", "Precio", "Cantidad", "Esperado"],
+        "rows": [
+          ["Venta normal", "1000", "3", "3000"],
+          ["Cantidad cero", "1000", "0", "0"],
+          ["Cantidad negativa", "1000", "-1", "Error de validación"],
+          ["Precio negativo", "-100", "2", "Error de validación"],
+          ["Tipo incorrecto", "1000", "\"tres\"", "Error de validación"]
+        ]
+      },
+      "details": [{ "title": "Happy Path, Edge Cases y casos inválidos", "text": "Happy Path: comportamiento esperado con datos válidos. Edge Cases: situaciones límite o poco habituales. Casos inválidos: datos que deben rechazarse. ¿Qué otras situaciones debería contemplar el sistema?" }],
+      "note": { "label": "Validaciones pendientes", "text": "La función inicial debe incorporar validaciones para cumplir los últimos tres casos: no están implementadas en la simple multiplicación." }
+    },
+    {
+      "type": "workshop", "nav": "Integración", "kicker": "03 / Testing de integración · 15 min",
+      "title": "Cuando cada parte funciona, pero el sistema falla",
+      "flow": [
+        { "title": "Frontend", "text": "Prueba individual: PASS" },
+        { "title": "API", "text": "Prueba individual: PASS" },
+        { "title": "Base de datos", "text": "Prueba individual: PASS" },
+        { "title": "Integración", "text": "Interacción: FAIL" }
+      ],
+      "bullets": ["El frontend envía una propiedad con otro nombre.", "La API utiliza otro puerto o espera otro formato.", "La base impone una restricción no contemplada.", "Una operación no confirma la transacción."],
+      "note": { "label": "Idea central", "text": "Los componentes pueden funcionar individualmente y fallar cuando interactúan entre sí." }
+    },
+    {
+      "type": "workshop", "nav": "Test integrado", "kicker": "POST → Service → Repository → Base de testing",
+      "title": "Crear un alumno y verificar que se guardó",
+      "codes": [{ "language": "python", "title": "Ejemplo conceptual · fixtures configuradas", "code": "def test_crear_alumno(client, alumno_repository):\n\n    # ARRANGE\n    alumno = {\n        \"nombre\": \"Lisa\",\n        \"apellido\": \"Simpson\",\n        \"dni\": \"12345678\"\n    }\n\n    # ACT\n    response = client.post(\n        \"/api/alumnos\",\n        json=alumno\n    )\n\n    # ASSERT\n    assert response.status_code == 201\n\n    guardado = alumno_repository.obtener_por_dni(\n        \"12345678\"\n    )\n\n    assert guardado is not None\n    assert guardado.nombre == \"Lisa\"" }],
+      "note": { "label": "Respuesta + persistencia", "text": "No verificamos solamente HTTP: también comprobamos que la información quedó guardada." },
+      "details": [{ "title": "Este ejemplo no es ejecutable de forma autónoma", "text": "client y alumno_repository son fixtures/dependencias de prueba que deben configurarse. La API y el repositorio deben compartir una base de testing real y aislada, con datos iniciales controlados y limpieza al finalizar. El cliente es síncrono y el repositorio devuelve un objeto con nombre." }]
+    },
+    {
+      "type": "workshop", "nav": "Contrato REST", "kicker": "04 / APIs y bases de datos · 15 min",
+      "title": "La API también tiene un contrato",
+      "codes": [{ "language": "http", "title": "Solicitud y respuesta esperada", "code": "POST /api/alumnos\nContent-Type: application/json\n\n{\n  \"nombre\": \"Lisa\",\n  \"apellido\": \"Simpson\",\n  \"dni\": \"12345678\"\n}\n\nHTTP/1.1 201 Created" }],
+      "table": {
+        "headers": ["Situación", "Respuesta esperada"],
+        "rows": [["Alumno creado", "201 Created"], ["Datos inválidos", "400 Bad Request"], ["No autenticado", "401 Unauthorized"], ["Alumno inexistente en una consulta", "404 Not Found"], ["DNI duplicado", "409 Conflict"], ["Error interno inesperado", "500 Internal Server Error"]]
+      },
+      "details": [{ "title": "Herramientas para explorar y verificar", "text": "Swagger / OpenAPI documenta el contrato; Postman y curl permiten enviar solicitudes; los clientes HTTP automatizados permiten repetir las verificaciones." }],
+      "note": { "label": "Diseño del ejemplo", "text": "Son contratos propuestos y pueden variar según la API. Comprobar también el cuerpo, sus tipos y los efectos secundarios, no solo el código HTTP." }
+    },
+    {
+      "type": "workshop", "nav": "También los errores", "kicker": "Aceptar lo válido, rechazar lo inválido",
+      "title": "¿Qué pasa cuando algo sale mal?",
+      "codes": [
+        { "language": "json", "title": "Solicitud válida → 201 Created", "code": "{\n  \"nombre\": \"Bart\",\n  \"apellido\": \"Simpson\",\n  \"dni\": \"87654321\"\n}" },
+        { "language": "json", "title": "Solicitud inválida → 400 Bad Request", "code": "{\n  \"nombre\": \"\",\n  \"apellido\": \"Simpson\",\n  \"dni\": \"\"\n}" }
+      ],
+      "bullets": ["Verificar que rechaza datos inválidos.", "Controlar duplicados y reglas de negocio.", "Una solicitud rechazada no debe dejar registros parciales."],
+      "note": { "label": "No alcanza con crear", "text": "Una API bien diseñada también responde correctamente ante errores. Conviene probar los campos inválidos por separado para que un error no oculte otro." }
+    },
+    {
+      "type": "workshop", "nav": "Bases de datos", "kicker": "Persistencia e independencia",
+      "title": "¿Qué comprobamos además de guardar?",
+      "bullets": ["El registro se almacena correctamente.", "Los datos recuperados son correctos.", "Se respeta la unicidad: no se permiten duplicados.", "Se respetan relaciones y claves foráneas.", "Una transacción se revierte ante errores.", "Los tests no contaminan otros escenarios."],
+      "codes": [{ "language": "text", "title": "Entornos separados", "code": "Development DB ≠ Testing DB ≠ Production DB" }],
+      "note": { "label": "Aislar y controlar", "text": "Usar una base de prueba exclusiva. Preparar datos antes de cada escenario y limpiarlos al finalizar, incluso si el test falla." },
+      "details": [{ "title": "Cuidado con las conexiones", "text": "Un rollback en la fixture no revierte necesariamente commits hechos por la aplicación en otra conexión. Elegir una estrategia de aislamiento adecuada y usar el mismo motor cuando importan sus restricciones y transacciones." }]
+    },
+    {
+      "type": "workshop", "nav": "Mocks", "kicker": "Dependencias externas",
+      "title": "¿Cómo probamos algo que depende de otro servicio?",
+      "flow": [
+        { "title": "Aplicación", "text": "Solicita un pago" },
+        { "title": "Servicio simulado", "text": "Reemplaza la pasarela" },
+        { "title": "Respuesta", "text": "approved" }
+      ],
+      "codes": [{ "language": "json", "title": "Respuesta simulada · sin pagos reales", "code": "{\n  \"status\": \"approved\",\n  \"transactionId\": \"TEST-001\"\n}" }],
+      "bullets": ["Un mock verifica interacciones esperadas con una dependencia simulada.", "Los dobles permiten controlar respuestas y errores."],
+      "details": [{ "title": "Otras dependencias", "text": "Servicios de correo, pasarelas de pago, APIs externas y servicios de mensajería. Probar tanto éxito como timeout o rechazo sin provocar operaciones reales en cada test unitario." }],
+      "note": { "label": "Límite", "text": "No reemplazan todas las pruebas de integración con el servicio real o su entorno sandbox." }
+    },
+    {
+      "type": "workshop", "nav": "Interfaz web", "kicker": "05 / Interfaces, regresión y automatización · 10 min",
+      "title": "¿Podemos automatizar lo que hace un usuario?",
+      "subtitle": "Abrir Login → Ingresar credenciales → Presionar Ingresar → Verificar Home",
+      "codes": [{ "language": "javascript", "title": "Ejemplo con Playwright", "code": "import { test, expect } from '@playwright/test';\n\ntest('login correcto', async ({ page }) => {\n\n  await page.goto('/login');\n\n  await page.getByLabel('Email')\n    .fill('usuario@test.com');\n\n  await page.getByLabel('Contraseña')\n    .fill('123456');\n\n  await page.getByRole('button', {\n    name: 'Ingresar'\n  }).click();\n\n  await expect(page).toHaveURL(/\\/home$/);\n});" }],
+      "note": { "label": "Ejemplo, no ejecución aquí", "text": "Requiere configurar Playwright, URL base y una aplicación de prueba con estas etiquetas y un usuario de testing. Permite automatizar acciones del navegador y comprobar resultados visibles." },
+      "details": [{ "title": "Alcance y alternativas", "text": "Selenium y Cypress son alternativas. Para E2E usar backend y persistencia reales de prueba; simular todas las respuestas cambia el alcance. La contraseña mostrada es solo ilustrativa." }]
+    },
+    {
+      "type": "workshop", "nav": "Escritorio", "kicker": "Cambian las herramientas, no los principios",
+      "title": "El testing no depende de que sea una aplicación web",
+      "codes": [
+        { "language": "text", "title": "Aplicación web", "code": "React\n  |\n  v\nAPI\n  |\n  v\nService\n  |\n  v\nPostgreSQL" },
+        { "language": "text", "title": "Aplicación de escritorio", "code": "Tkinter / PyQt\n      |\n      v\nService\n      |\n      v\nAlumnoRepository\n      |\n      v\nSQLite" }
+      ],
+      "note": { "label": "En ambos", "text": "Unitarios de lógica de negocio, integración con repositorios y bases, y flujos completos de la aplicación." },
+      "details": [{ "title": "Herramientas según el lenguaje", "text": "Python: pytest. Java: JUnit. C#: xUnit, NUnit o MSTest. Las herramientas de automatización de interfaz dependen de la plataforma; no es necesario configurar todas para entender el principio." }]
+    },
+    {
+      "type": "workshop", "nav": "Regresión y CI", "kicker": "Repetir después de cada cambio",
+      "title": "¿Qué pasa cuando cambiamos algo que funcionaba?",
+      "codes": [
+        { "language": "text", "title": "Versión inicial", "code": "Login        PASS\nAlumnos      PASS\nInscripción  PASS" },
+        { "language": "text", "title": "Se agregan reportes · después del cambio", "code": "Login        PASS\nAlumnos      PASS\nInscripción  FAIL\nReportes     PASS" },
+        { "language": "bash", "title": "Ejecutar la suite", "code": "pytest" },
+        { "language": "text", "title": "Salida ilustrativa", "code": "42 passed\n1 failed" }
+      ],
+      "details": [{ "title": "Integración continua · GitHub Actions", "text": "Push de código → Pipeline → Ejecutar tests → Resultado. Los tests automatizados se repiten luego de los cambios. GitHub Actions es una opción para ejecutar esa verificación en cada push o pull request." }],
+      "note": { "label": "Regresión", "text": "Un cambio rompe un comportamiento que antes funcionaba. Una prueba del defecto corregido ayuda a detectar si vuelve a aparecer." }
+    },
+    {
+      "type": "workshop", "nav": "Desafío práctico", "kicker": "06 / Ejercicio y cierre · 5–10 min",
+      "title": "Ahora piensen como testers",
+      "subtitle": "Sistema de biblioteca: identificar al menos seis casos y clasificarlos por alcance.",
+      "flow": [
+        { "title": "POST /libros", "text": "Crear" },
+        { "title": "GET /libros", "text": "Consultar la lista" },
+        { "title": "DELETE /libros/{id}", "text": "Eliminar" }
+      ],
+      "bullets": ["ISBN obligatorio y único; título obligatorio.", "Stock no negativo.", "Un libro inexistente no puede eliminarse exitosamente."],
+      "details": [{ "title": "Preguntas para diseñar cada test", "text": "¿Qué datos utilizarían? ¿Qué resultado esperarían? ¿Qué componente estarían probando? ¿Cómo comprobarían que pasó? Clasificar en unitario, integración o E2E, indicando dependencias reales y simuladas." }],
+      "interactive": "challenge",
+      "solution": {
+        "headers": ["Caso / datos", "Nivel / alcance", "Resultado verificable"],
+        "rows": [
+          ["Alta válida: ISBN nuevo, título y stock 2", "Integración: API + service + repository + DB", "201 propuesto; registro persistido con esos datos"],
+          ["Repetir un ISBN existente", "Integración: API + DB real de prueba", "409 propuesto; no hay duplicados"],
+          ["Título vacío", "Unitario: service aislado", "Error de validación; no solicita guardar"],
+          ["Stock -1", "Unitario: regla de negocio", "Error de validación"],
+          ["Consultar con un libro existente", "Integración: GET /libros + DB", "200; lista contiene el registro y sus datos"],
+          ["Consultar sin el libro buscado", "Integración: GET /libros + DB", "200; lista no contiene ese id; vacía si no hay libros"],
+          ["Eliminar libro existente desde UI", "E2E: interfaz + API + DB", "Desaparece de la lista y no queda persistido"],
+          ["Eliminar un id inexistente", "Integración: DELETE + DB", "404 propuesto; sin cambios en otros registros"]
+        ]
+      },
+      "note": { "label": "Propuesta, no única solución", "text": "El nivel depende de la frontera que elegimos. Los códigos HTTP se acuerdan como contrato. GET /libros devuelve una lista: buscar un id ausente no implica 404." }
+    },
+    {
+      "type": "workshop", "nav": "Cierre", "kicker": "¿Qué parte de tu proyecto probarías primero y por qué?",
+      "title": "Del código que funciona al código que podemos verificar",
+      "columns": 2,
+      "cards": [
+        { "title": "1. Probar es comprobar", "text": "Cada test necesita un resultado esperado y verificable.", "accent": "lime" },
+        { "title": "2. También las integraciones", "text": "No alcanza con probar componentes aislados: las interacciones pueden fallar." },
+        { "title": "3. Los errores también se prueban", "text": "No verificar solamente el caso ideal.", "accent": "orange" },
+        { "title": "4. Automatizar permite repetir", "text": "Las pruebas automatizadas ayudan a detectar regresiones.", "accent": "violet" }
+      ],
+      "note": { "label": "Para recordar", "text": "«Una aplicación que funciona no es necesariamente una aplicación que ha sido suficientemente probada.»" }
+    }
+  ]
+}

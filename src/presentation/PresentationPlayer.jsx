@@ -7,7 +7,7 @@ function SlideNavigation({ active, onSelect, presentation, site }) {
   return (
     <Box className="slide-navigation">
       <ButtonBase component={Link} to="/" className="deck-brand" aria-label="Volver al planificador">
-        <span className="deck-brand__mark">A</span>
+        <span className="deck-brand__mark">{presentation.mark || 'A'}</span>
         <span><b>{presentation.shortTitle}</b><small>{site.plannerTitle}</small></span>
       </ButtonBase>
       <Box component="nav" aria-label="Diapositivas">
@@ -44,6 +44,8 @@ export default function PresentationPlayer({ classItem, presentation, site }) {
     const handleKeyDown = (event) => {
       const tagName = event.target.tagName
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tagName) || event.target.isContentEditable) return
+      if (event.defaultPrevented || event.target.closest('summary, [data-slide-control]')) return
+      if (event.key === ' ' && event.target.closest('button, a')) return
       if (['ArrowRight', 'PageDown', ' '].includes(event.key)) {
         event.preventDefault()
         setActive((current) => Math.min(total - 1, current + 1))
@@ -58,6 +60,10 @@ export default function PresentationPlayer({ classItem, presentation, site }) {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [total])
+
+  useEffect(() => {
+    viewportRef.current?.scrollTo({ top: 0 })
+  }, [active])
 
   const navigation = <SlideNavigation active={active} onSelect={show} presentation={presentation} site={site} />
 
@@ -94,7 +100,7 @@ export default function PresentationPlayer({ classItem, presentation, site }) {
             touchStart.current = null
           }}
         >
-          <Box component="section" className="deck-slide" aria-live="polite" aria-label={`Diapositiva ${active + 1} de ${total}`}>
+          <Box component="section" className={`deck-slide ${presentation.slides[active].type === 'workshop' ? 'deck-slide--workshop' : ''}`} aria-live="polite" aria-label={`Diapositiva ${active + 1} de ${total}`}>
             <SlideRenderer slide={presentation.slides[active]} site={site} />
           </Box>
         </Box>

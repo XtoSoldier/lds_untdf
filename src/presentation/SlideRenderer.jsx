@@ -1,5 +1,7 @@
 import { Box, Card, Link, Typography } from '@mui/material'
 import UniversityLogo from '../components/UniversityLogo'
+import WorkshopContent from './WorkshopContent'
+import '../styles/workshop.css'
 
 function SlideHeading({ slide }) {
   return (
@@ -87,6 +89,13 @@ export default function SlideRenderer({ slide, site }) {
   return (
     <>
       <SlideHeading slide={slide} />
+      {slide.type === 'workshop' && <>
+        {slide.institutional && <Box className="academic-banner"><UniversityLogo /><Box><strong>{site.course}</strong><span>{site.term}</span></Box></Box>}
+        {slide.flow && <Flow items={slide.flow} />}
+        {slide.cards && <Cards cards={slide.cards} columns={slide.columns} />}
+        <WorkshopContent key={slide.nav} slide={slide} />
+        {slide.note && <Note note={slide.note} />}
+      </>}
       {slide.type === 'questions' && (
         <Box className="question-grid">
           {slide.items.map((item, index) => (

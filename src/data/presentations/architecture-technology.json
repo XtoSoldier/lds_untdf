@@ -1,0 +1,247 @@
+{
+  "id": "architecture-technology",
+  "title": "Decisiones de Arquitectura y Tecnología",
+  "shortTitle": "ARQ / TECH",
+  "slides": [
+    {
+      "nav": "Inicio",
+      "type": "cover",
+      "kicker": "Píldora académica",
+      "title": "Decisiones de Arquitectura y Tecnología",
+      "subtitle": "Cómo elegir una solución que el equipo pueda construir, explicar y mantener.",
+      "manifesto": "No existe una tecnología universalmente mejor, sino aquella que sabemos utilizar y nos permite responder adecuadamente a las necesidades del proyecto",
+      "goals": [
+        "Reconocer la arquitectura necesaria.",
+        "Comparar tecnologías sin elegir por moda.",
+        "Justificar front, back y datos."
+      ]
+    },
+    {
+      "nav": "La regla",
+      "type": "questions",
+      "kicker": "Antes del framework",
+      "title": "Primero, el problema y su contexto. Después, la tecnología.",
+      "subtitle": "La arquitectura se define según las necesidades, el alcance y las condiciones reales del proyecto.",
+      "items": [
+        { "title": "Usuarios", "text": "¿Quién lo usa y desde qué dispositivo?" },
+        { "title": "Conectividad", "text": "¿Siempre habrá internet? ¿Debe funcionar offline?" },
+        { "title": "Hardware", "text": "¿Hay USB, serie, sensores o red industrial?" },
+        { "title": "Datos", "text": "¿Son sensibles, geográficos, compartidos o locales?" },
+        { "title": "Operación", "text": "¿Quién instala, despliega y actualiza?" },
+        { "title": "Equipo", "text": "¿Qué puede mantener hoy?" }
+      ]
+    },
+    {
+      "nav": "Arquitectura",
+      "type": "flowCards",
+      "kicker": "Un buen punto de partida",
+      "title": "Simple, modular y con límites claros",
+      "subtitle": "Para un trabajo final, una arquitectura entendible suele ganar frente a una sofisticada.",
+      "flow": [
+        { "title": "Cliente", "text": "Web / móvil / escritorio" },
+        { "title": "API", "text": "Reglas de negocio" },
+        { "title": "Datos", "text": "Persistencia" }
+      ],
+      "cards": [
+        { "accent": "lime", "label": "DEFAULT SANO", "title": "Monolito modular", "text": "API REST + base relacional. Un único despliegue organizado por módulos." },
+        { "accent": "orange", "label": "COMPLEJIDAD PREMATURA", "title": "No comenzar por microservicios", "text": "Kubernetes, colas y múltiples bases solo si resuelven una restricción demostrable." }
+      ]
+    },
+    {
+      "nav": "Aplicación web",
+      "type": "cards",
+      "columns": 3,
+      "kicker": "Capa de presentación",
+      "title": "De HTML “vanilla” a un framework",
+      "subtitle": "Agregar abstracciones solamente cuando la interfaz lo necesita.",
+      "cards": [
+        { "accent": "orange", "logos": [{ "name": "HTML", "src": "https://cdn.simpleicons.org/html5/E34F26" }, { "name": "CSS", "src": "https://cdn.simpleicons.org/css/663399" }, { "name": "JS", "src": "https://cdn.simpleicons.org/javascript/F7DF1E" }], "title": "Vanilla", "text": "Landing, prototipo o sitio con poca interacción." },
+        { "logos": [{ "name": "React", "src": "https://cdn.simpleicons.org/react/61DAFB" }, { "name": "Angular", "src": "https://cdn.simpleicons.org/angular/DD0031" }], "title": "Interfaz compleja", "text": "Componentes reutilizables, navegación y estado." },
+        { "accent": "lime", "logos": [{ "name": "PWA", "src": "https://cdn.simpleicons.org/pwa/5A0FC8" }], "title": "Alternativa móvil", "text": "Web instalable cuando no se necesitan integraciones nativas profundas." }
+      ]
+    },
+    {
+      "nav": "React, Vite y Next",
+      "type": "list",
+      "kicker": "No son sinónimos",
+      "title": "React, Vite, Next.js y Redux",
+      "subtitle": "Cada pieza responde a una pregunta distinta.",
+      "items": [
+        { "logo": { "name": "React", "src": "https://cdn.simpleicons.org/react/61DAFB" }, "lead": "Librería de interfaz:", "text": "construye componentes." },
+        { "logo": { "name": "Vite", "src": "https://cdn.simpleicons.org/vite/646CFF" }, "lead": "Herramienta de desarrollo y build:", "text": "ideal para una SPA conectada a una API." },
+        { "logo": { "name": "Next.js", "src": "https://cdn.simpleicons.org/nextdotjs/ffffff" }, "lead": "Framework React:", "text": "routing, SSR, contenido estático y capacidades full stack." },
+        { "logo": { "name": "Redux", "src": "https://cdn.simpleicons.org/redux/764ABC" }, "lead": "Estado global:", "text": "usarlo cuando muchos módulos comparten estado complejo." }
+      ]
+    },
+    {
+      "nav": "CSS y preprocesadores",
+      "type": "cardsNote",
+      "columns": 4,
+      "kicker": "Estilos, utilidades y componentes",
+      "title": "CSS: de lo básico a un sistema visual",
+      "subtitle": "Un preprocesador transforma CSS; un framework aporta reglas o componentes diseñados.",
+      "cards": [
+        { "logos": [{ "name": "CSS", "src": "https://cdn.simpleicons.org/css/663399" }], "title": "CSS / CSS Modules", "text": "Funciona con cualquier stack. CSS Modules aísla estilos por componente." },
+        { "accent": "violet", "logos": [{ "name": "Sass", "src": "https://cdn.simpleicons.org/sass/CC6699" }], "title": "Sass / SCSS", "text": "Variables, mixins y anidación. Compatible con Angular, React, Vue o vanilla." },
+        { "accent": "lime", "logos": [{ "name": "Bootstrap", "src": "https://cdn.simpleicons.org/bootstrap/7952B3" }, { "name": "Tailwind", "src": "https://cdn.simpleicons.org/tailwindcss/06B6D4" }], "title": "Frameworks CSS", "text": "Bootstrap ofrece componentes; Tailwind, clases utilitarias." },
+        { "accent": "orange", "logos": [{ "name": "MUI", "src": "https://cdn.simpleicons.org/mui/007FFF" }, { "name": "Angular Material", "src": "https://cdn.simpleicons.org/angular/DD0031" }], "title": "Componentes UI", "text": "MUI acompaña React; Angular Material, Angular." }
+      ],
+      "note": { "label": "Regla práctica", "text": "El framework JS organiza la aplicación; la herramienta CSS organiza su apariencia." }
+    },
+    {
+      "nav": "Backend",
+      "type": "cards",
+      "columns": 3,
+      "kicker": "Reglas, seguridad e integraciones",
+      "title": "Backend: elegir por ecosistema y equipo",
+      "subtitle": "Todos pueden exponer APIs sólidas. Cambian experiencia, herramientas y mantenimiento.",
+      "cards": [
+        { "logos": [{ "name": "Python", "src": "https://cdn.simpleicons.org/python/3776AB" }], "title": "FastAPI / Django", "text": "FastAPI para APIs; Django cuando ayudan ORM, admin y estructura integral." },
+        { "accent": "orange", "logos": [{ "name": "Spring Boot", "src": "https://cdn.simpleicons.org/springboot/6DB33F" }], "title": "Java", "text": "Estructura, seguridad e inyección de dependencias en un ecosistema maduro." },
+        { "accent": "violet", "logos": [{ "name": ".NET", "src": "https://cdn.simpleicons.org/dotnet/512BD4" }], "title": "ASP.NET Core", "text": "APIs, ecosistema Microsoft, escritorio y hardware." },
+        { "accent": "lime", "logos": [{ "name": "Laravel", "src": "https://cdn.simpleicons.org/laravel/FF2D20" }], "title": "PHP", "text": "CRUD, autenticación y aplicaciones de negocio." },
+        { "logos": [{ "name": "Node.js", "src": "https://cdn.simpleicons.org/nodedotjs/5FA04E" }], "title": "Express / NestJS", "text": "Flexibilidad o una estructura más guiada con TypeScript." },
+        { "accent": "orange", "logos": [{ "name": "Go", "src": "https://cdn.simpleicons.org/go/00ADD8" }], "title": "Servicios, no UI móvil", "text": "Backend eficiente y concurrente; no reemplaza Flutter o React Native." }
+      ]
+    },
+    {
+      "nav": "Aplicación móvil",
+      "type": "cards",
+      "columns": 3,
+      "kicker": "Android · iOS · sensores",
+      "title": "Móvil: compartir código sin negar la plataforma",
+      "subtitle": "Depende del acceso nativo, la experiencia y cuánto se quiere compartir.",
+      "cards": [
+        { "logos": [{ "name": "React Native", "src": "https://cdn.simpleicons.org/react/61DAFB" }, { "name": "Expo", "src": "https://cdn.simpleicons.org/expo/ffffff" }], "title": "Expo para empezar", "text": "Gestiona builds, permisos y paquetes; apunta a Android, iOS y web." },
+        { "accent": "orange", "title": "React Native bare", "text": "Mayor control cuando hay SDKs nativos o configuración muy específica." },
+        { "accent": "violet", "logos": [{ "name": "Flutter", "src": "https://cdn.simpleicons.org/flutter/02569B" }, { "name": "Kotlin", "src": "https://cdn.simpleicons.org/kotlin/7F52FF" }], "title": "Alternativas", "text": "Flutter comparte UI; Kotlin es excelente para Android y lógica multiplataforma." }
+      ]
+    },
+    {
+      "nav": "Web + móvil",
+      "type": "cards",
+      "columns": 3,
+      "kicker": "Una solución, varias experiencias",
+      "title": "¿Una interfaz universal o dos interfaces?",
+      "subtitle": "Compartir todo no siempre resulta más barato.",
+      "cards": [
+        { "accent": "lime", "title": "Expo + React Native Web", "text": "Máximo reúso para sistemas internos, formularios y experiencias similares." },
+        { "title": "Next.js + React Native", "text": "Mejor si la web necesita SEO y la app cámara, GPS o gestos. Compartir backend y contratos." },
+        { "accent": "orange", "title": "PWA responsive", "text": "La opción más simple si navegador, modo instalable y offline limitado alcanzan." }
+      ]
+    },
+    {
+      "nav": "On-premise + hardware",
+      "type": "flowCards",
+      "kicker": "Cerca del dispositivo",
+      "title": "Cuando el software controla hardware",
+      "subtitle": "Lo crítico es la comunicación confiable con el equipo físico.",
+      "bidirectional": true,
+      "flow": [
+        { "title": "Hardware", "text": "Sensor / PLC / equipo" },
+        { "title": "Servicio local", "text": "Driver + reglas + buffer" },
+        { "title": "Interfaz", "text": "Escritorio o web local" }
+      ],
+      "cards": [
+        { "title": "Opciones", "text": "C# WPF/WinUI, Python PySide, JavaFX y Electron/Tauri." },
+        { "accent": "orange", "title": "Fiabilidad", "text": "Reconexión, timeouts, logs, buffer offline, arranque automático y recuperación." }
+      ]
+    },
+    {
+      "nav": "Bases de datos",
+      "type": "cardsNote",
+      "columns": 4,
+      "kicker": "Elegir lo predecible",
+      "title": "Relacional como primera opción",
+      "subtitle": "Si hay entidades, relaciones, reglas e informes, SQL suele ser la decisión segura.",
+      "cards": [
+        { "logos": [{ "name": "PostgreSQL", "src": "https://cdn.simpleicons.org/postgresql/4169E1" }], "text": "Versátil, open source y geográfico con PostGIS." },
+        { "accent": "orange", "logos": [{ "name": "MySQL", "src": "https://cdn.simpleicons.org/mysql/4479A1" }], "text": "Difundida en hosting, e-commerce y PHP." },
+        { "accent": "violet", "logos": [{ "name": "SQL Server", "src": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-original.svg" }], "text": "Integración con .NET, Microsoft y BI." },
+        { "accent": "lime", "logos": [{ "name": "SQLite", "src": "https://cdn.simpleicons.org/sqlite/003B57" }], "text": "Embebida para local, móvil y offline." }
+      ],
+      "note": { "label": "NoSQL", "text": "Solo cuando el modelo de documentos o patrón de acceso lo justifica." }
+    },
+    {
+      "nav": "Mapas y ubicación",
+      "type": "geoCards",
+      "kicker": "Cinco problemas distintos",
+      "title": "Geolocalización no es solo mostrar un mapa",
+      "subtitle": "Ubicar, visualizar, geocodificar, rutear y consultar proximidad son capacidades separadas.",
+      "capabilities": [
+        { "title": "GPS", "text": "Obtener posición" },
+        { "title": "MAPA", "text": "Visualizar" },
+        { "title": "GEOCODING", "text": "Dirección ⇄ coordenada" },
+        { "title": "RUTAS", "text": "Distancia y recorrido" },
+        { "title": "POSTGIS", "text": "Cercanía y áreas" }
+      ],
+      "cards": [
+        { "accent": "lime", "logos": [{ "name": "OpenStreetMap", "src": "https://cdn.simpleicons.org/openstreetmap/7EBC6F" }, { "name": "Leaflet", "src": "https://cdn.simpleicons.org/leaflet/199900" }], "title": "Ruta abierta", "text": "OSM, Leaflet/MapLibre, Nominatim y OSRM. Respetar límites y políticas." },
+        { "logos": [{ "name": "Google Maps", "src": "https://cdn.simpleicons.org/googlemaps/4285F4" }, { "name": "Mapbox", "src": "https://cdn.simpleicons.org/mapbox/ffffff" }], "title": "Servicios administrados", "text": "Google, Mapbox, HERE y TomTom con SDKs, soporte y pago por uso." }
+      ]
+    },
+    {
+      "nav": "Docker",
+      "type": "featureCardsNote",
+      "kicker": "Entorno reproducible",
+      "title": "Docker: útil, pero no obligatorio",
+      "subtitle": "Empaqueta la aplicación y sus dependencias para ejecutarlas consistentemente.",
+      "feature": { "logo": { "name": "Docker", "src": "https://cdn.simpleicons.org/docker/2496ED" }, "text": "Un contenedor no es una máquina virtual completa: comparte el sistema anfitrión y encapsula procesos, librerías y configuración." },
+      "cards": [
+        { "accent": "lime", "title": "Cuándo aporta", "text": "Backend, base, servicios auxiliares o equipos con entornos distintos." },
+        { "title": "Docker Compose", "text": "Describe API + base + caché y levanta todo de forma repetible." },
+        { "accent": "orange", "title": "Cuándo no hace falta", "text": "Landing estática, app móvil sin backend o prototipo local simple." }
+      ],
+      "note": { "label": "Orden recomendado", "text": "Primero hacer funcionar el sistema; después contenerizar si mejora entrega u operación." }
+    },
+    {
+      "nav": "Recetas por proyecto",
+      "type": "recipes",
+      "kicker": "Puntos de partida, no dogmas",
+      "title": "Una arquitectura probable para cada caso",
+      "items": [
+        { "title": "WEB PÚBLICA", "text": "Next.js + API + PostgreSQL", "tag": "SEO" },
+        { "title": "WEB DE GESTIÓN", "text": "React + Vite + FastAPI/Spring/.NET + PostgreSQL", "tag": "SPA" },
+        { "title": "MÓVIL", "text": "React Native + Expo + API REST + PostgreSQL", "tag": "GPS" },
+        { "title": "WEB + MÓVIL", "text": "Expo universal o Next.js + React Native", "tag": "Reúso" },
+        { "title": "ON-PREMISE", "text": "WPF, PySide o JavaFX + SQLite/SQL Server", "tag": "Hardware" },
+        { "title": "GEO", "text": "Front + API + PostgreSQL/PostGIS + mapas", "tag": "Espacial" }
+      ]
+    },
+    {
+      "nav": "Decisión final",
+      "type": "decision",
+      "kicker": "Cierre",
+      "title": "Que puedan defender la elección",
+      "subtitle": "Una pila es buena cuando sus ventajas y costos están explícitos.",
+      "scoreLabel": "PUNTUAR 1–5",
+      "score": [
+        "Adecuación 25%",
+        "Experiencia 25%",
+        "Operación 15%",
+        "Mantenibilidad 15%",
+        "Offline/hardware 10%",
+        "Costos 10%"
+      ],
+      "quoteLabel": "LA FRASE FINAL",
+      "quote": "“Elegimos estas tecnologías porque se adaptan a las necesidades del proyecto, podemos implementarlas con los conocimientos y recursos disponibles, y comprendemos sus ventajas y limitaciones.”",
+      "closing": "Si no pueden explicar por qué eligieron esas tecnologías, la decisión todavía no está suficientemente fundamentada."
+    },
+    {
+      "nav": "Fuentes",
+      "type": "sources",
+      "kicker": "Para profundizar",
+      "title": "Documentación oficial recomendada",
+      "items": [
+        { "label": "React", "url": "https://react.dev/learn/creating-a-react-app" },
+        { "label": "Vite", "url": "https://vite.dev/guide/" },
+        { "label": "Next.js", "url": "https://nextjs.org/docs" },
+        { "label": "Expo", "url": "https://docs.expo.dev/workflow/web/" },
+        { "label": "FastAPI", "url": "https://fastapi.tiangolo.com/" },
+        { "label": "Spring Boot", "url": "https://spring.io/projects/spring-boot/" },
+        { "label": "PostGIS", "url": "https://postgis.net/docs/" },
+        { "label": "Google Maps Platform", "url": "https://developers.google.com/maps/documentation" }
+      ]
+    }
+  ]
+}

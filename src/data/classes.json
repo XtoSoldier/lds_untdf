@@ -1,0 +1,11 @@
+[
+  {
+    "id": "architecture-technology",
+    "slug": "arquitectura-decisiones-tecnicas",
+    "presentationId": "architecture-technology",
+    "title": "Arquitectura y decisiones técnicas",
+    "startsAt": "2026-08-25T16:00:00-03:00",
+    "summary": "Cómo elegir una solución que el equipo pueda construir, explicar y mantener.",
+    "status": "programada"
+  }
+]

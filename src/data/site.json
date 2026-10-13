@@ -1,0 +1,9 @@
+{
+  "plannerTitle": "Planificador de Clases",
+  "course": "Laboratorio de Software",
+  "term": "Cursado 2do Cuatrimestre 2026",
+  "institution": "Universidad Nacional de Tierra del Fuego",
+  "institutionShort": "UNTDF",
+  "logoUrl": "/logo-untdf.svg",
+  "teachers": ["Federico Gonzalez", "Fernando Vega"]
+}
